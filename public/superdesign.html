@@ -1,0 +1,1015 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yantri OS | Your Voice. Your Computer. One AI.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.16.4/framer-motion.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Geist+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/satoshi');
+
+        :root {
+            --bg-black: #050505;
+            --accent-indigo: #6366f1;
+            --accent-blue: #3b82f6;
+            --text-gray: #a1a1aa;
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Satoshi', 'Inter', sans-serif;
+            background-color: var(--bg-black);
+            color: white;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+        }
+
+        .hero-text-gradient {
+            background: linear-gradient(180deg, #FFFFFF 0%, #A1A1AA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .voice-orb-pulse {
+            animation: pulse-glow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(1); box-shadow: 0 0 50px rgba(99, 102, 241, 0.2); }
+            50% { transform: scale(1.05); box-shadow: 0 0 100px rgba(99, 102, 241, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 0 50px rgba(99, 102, 241, 0.2); }
+        }
+
+        .orb-wave {
+            animation: wave-rotate 20s linear infinite;
+        }
+
+        @keyframes wave-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .sticky-nav.scrolled {
+            padding: 1rem 0;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        /* Laptop Styling */
+        .laptop-chassis {
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.5);
+        }
+
+        .laptop-lid {
+            transform-origin: bottom;
+            transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+        }
+
+        .laptop-screen {
+            background: #000;
+            box-shadow: inset 0 0 20px rgba(99, 102, 241, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .waveform-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 5s linear infinite;
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .boot-symbol {
+            animation: boot-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes boot-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        /* Architecture Line Drawing */
+        .line-draw {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: draw 2s ease forwards;
+        }
+
+        @keyframes draw {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-black);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 10px;
+        }
+
+        .perspective-lg {
+            perspective: 2000px;
+        }
+
+        .text-reveal span {
+            display: inline-block;
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .text-reveal.active span {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        /* OS Interface Micro-elements */
+        .os-dock-icon {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .os-dock-icon:hover {
+            transform: scale(1.3) translateY(-10px);
+        }
+    </style>
+</head>
+<body class="bg-[#050505] text-white selection:bg-indigo-500/30 overflow-x-hidden">
+    <div class="min-h-screen flex flex-col relative">
+        
+        <!-- Background Noise/Texture -->
+        <div class="fixed inset-0 opacity-[0.03] pointer-events-none z-50" style="background-image: url('https://www.transparenttextures.com/patterns/p6.png');"></div>
+
+        <!-- Navigation -->
+        <nav id="main-nav" class="fixed top-0 w-full z-[100] transition-all duration-500 py-8 px-6 md:px-12">
+            <div class="max-w-7xl mx-auto flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 relative flex items-center justify-center">
+                        <div class="absolute inset-0 bg-indigo-500 blur-md opacity-30"></div>
+                        <iconify-icon icon="lucide:orbit" class="text-2xl text-white relative z-10"></iconify-icon>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight text-reveal" id="nav-brand">Yantri OS</span>
+                </div>
+
+                <div class="hidden md:flex items-center gap-10">
+                    <a id="nav-link-product" href="#product" class="nav-item relative text-sm font-medium text-zinc-400 hover:text-white transition-colors">Product</a>
+                    <a id="nav-link-how" href="#how-it-works" class="nav-item relative text-sm font-medium text-zinc-400 hover:text-white transition-colors">How it Works</a>
+                    <a id="nav-link-features" href="#features" class="nav-item relative text-sm font-medium text-zinc-400 hover:text-white transition-colors">Features</a>
+                    <a id="nav-link-privacy" href="#privacy" class="nav-item relative text-sm font-medium text-zinc-400 hover:text-white transition-colors">Privacy</a>
+                </div>
+
+                <div class="flex items-center gap-6">
+                    <a id="nav-link-pricing" href="#pricing" class="hidden sm:block text-sm font-medium text-zinc-400 hover:text-white transition-colors">Pricing</a>
+                    <button id="cta-nav-try" class="bg-white text-black px-5 py-2.5 rounded-full text-sm font-bold hover:bg-zinc-200 transition-all active:scale-95">
+                        Try Yantri OS
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 overflow-hidden">
+            <!-- Floating Orb Container -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] pointer-events-none">
+                <div class="absolute inset-0 bg-indigo-500/5 rounded-full blur-[120px]"></div>
+            </div>
+
+            <div class="relative z-10 text-center max-w-4xl px-6 mx-auto">
+                <div class="reveal-up active inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-8">
+                    <div class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></div>
+                    <span class="text-[11px] font-bold tracking-widest uppercase text-indigo-300">Available for early access</span>
+                </div>
+
+                <h1 class="hero-text-gradient text-6xl md:text-8xl font-bold tracking-tighter leading-[0.95] mb-8 reveal-up active">
+                    Your voice.<br>Your computer.<br>One AI.
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-zinc-400 font-medium mb-12 max-w-2xl mx-auto reveal-up active delay-100">
+                    Talk to your computer like you talk to a teammate. Control everything with natural language.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-6 reveal-up active delay-200">
+                    <button id="cta-hero-try" class="group relative bg-white text-black px-8 py-4 rounded-full text-lg font-bold overflow-hidden shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                        <span class="relative z-10 flex items-center gap-2">
+                            Try Yantri OS <iconify-icon icon="lucide:arrow-right" class="group-hover:translate-x-1 transition-transform"></iconify-icon>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </button>
+                    <button id="cta-hero-demo" class="px-8 py-4 rounded-full text-lg font-bold text-zinc-300 hover:text-white transition-colors">
+                        See how it works
+                    </button>
+                </div>
+            </div>
+
+            <!-- The Interactive Orb -->
+            <div id="voice-orb-container" class="mt-20 relative w-64 h-64 md:w-80 md:h-80 cursor-pointer group">
+                <div class="voice-orb-pulse absolute inset-0 bg-gradient-to-tr from-indigo-600 to-blue-400 rounded-full opacity-40 blur-2xl"></div>
+                <div class="absolute inset-0 rounded-full border border-white/10 bg-zinc-900/50 backdrop-blur-3xl overflow-hidden shadow-2xl">
+                    <div class="orb-wave absolute inset-[-50%] bg-[conic-gradient(from_0deg,transparent,rgba(99,102,241,0.4),transparent)]"></div>
+                    <div id="orb-waveform" class="absolute inset-0 flex items-center justify-center gap-1 px-8">
+                        <div class="h-1 w-1 bg-white rounded-full animate-bounce" style="animation-delay: 0s"></div>
+                        <div class="h-3 w-1 bg-white rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                        <div class="h-2 w-1 bg-white rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                        <div class="h-5 w-1 bg-white rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                        <div class="h-2 w-1 bg-white rounded-full animate-bounce" style="animation-delay: 0.3s"></div>
+                        <div class="h-1 w-1 bg-white rounded-full animate-bounce" style="animation-delay: 0.5s"></div>
+                    </div>
+                </div>
+                <div class="absolute -bottom-16 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span class="text-xs font-bold tracking-widest text-indigo-400 uppercase">Click to start speaking</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Laptop Opening Scroll Section -->
+        <section class="relative min-h-[150vh] bg-[#050505] flex flex-col items-center overflow-hidden py-32" id="laptop-reveal-section">
+            <div class="sticky top-24 w-full flex flex-col items-center px-6">
+                <div class="mb-16 text-center max-w-2xl">
+                    <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">The Operating System redefined.</h2>
+                    <p class="text-zinc-400">A complete environment built for voice first interaction.</p>
+                </div>
+                
+                <!-- Futuristic Laptop -->
+                <div class="perspective-lg w-full max-w-[900px] h-[500px] flex items-center justify-center">
+                    <div id="main-laptop" class="laptop-chassis w-full h-[20px] bg-zinc-800 rounded-b-xl relative origin-center">
+                        <!-- Base -->
+                        <div class="absolute top-0 left-0 w-full h-full bg-zinc-800 rounded-b-xl border-t border-zinc-700 shadow-2xl"></div>
+                        <div class="absolute -top-1 w-full h-[5px] bg-zinc-700 rounded-t-sm"></div>
+                        
+                        <!-- Lid -->
+                        <div id="main-laptop-lid" class="laptop-lid absolute bottom-0 left-0 w-full h-[500px] bg-zinc-900 rounded-t-xl border border-zinc-800 origin-bottom transform translate-z-0">
+                            <div class="absolute inset-[8px] laptop-screen rounded-lg flex items-center justify-center">
+                                <!-- Boot/OS Interface Container -->
+                                <div id="os-screen-content" class="w-full h-full relative">
+                                    <!-- Boot Seq -->
+                                    <div id="os-boot" class="absolute inset-0 bg-black flex flex-col items-center justify-center z-50 transition-opacity duration-1000">
+                                        <div class="w-10 h-10 relative mb-6">
+                                            <div class="absolute inset-0 bg-white blur-xl opacity-20 boot-symbol"></div>
+                                            <iconify-icon icon="lucide:orbit" class="text-4xl text-white relative boot-symbol"></iconify-icon>
+                                        </div>
+                                        <div id="boot-text" class="text-sm font-mono tracking-[0.5em] text-zinc-500 uppercase opacity-0 transition-opacity">Yantri OS</div>
+                                    </div>
+                                    
+                                    <!-- Desktop Interface -->
+                                    <div id="os-desktop" class="absolute inset-0 opacity-0 transition-opacity duration-1000 bg-[#050505] p-4 flex flex-col">
+                                        <div class="flex justify-between items-center text-[8px] font-bold text-zinc-500 uppercase tracking-widest">
+                                            <div class="flex items-center gap-2">
+                                                <iconify-icon icon="lucide:orbit" class="text-zinc-300"></iconify-icon>
+                                                <span>Yantri 1.0</span>
+                                            </div>
+                                            <div class="flex items-center gap-4">
+                                                <span class="text-emerald-500">● ONLINE</span>
+                                                <span id="os-time">12:48 PM</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex-1 relative flex items-center justify-center">
+                                            <!-- Floating Windows -->
+                                            <div class="absolute top-10 left-10 w-48 h-32 glass-card rounded-lg border-white/5 p-2 shadow-2xl">
+                                                <div class="h-2 w-full bg-white/5 rounded-full mb-2"></div>
+                                                <div class="h-2 w-2/3 bg-white/5 rounded-full"></div>
+                                            </div>
+                                            
+                                            <!-- Central Voice Assistant -->
+                                            <div class="flex flex-col items-center gap-6">
+                                                <div class="w-24 h-24 rounded-full border border-indigo-500/20 bg-indigo-500/5 flex items-center justify-center">
+                                                    <div class="flex gap-0.5 items-center">
+                                                        <div class="h-4 w-0.5 bg-indigo-500 animate-pulse"></div>
+                                                        <div class="h-8 w-0.5 bg-indigo-500 animate-pulse" style="animation-delay: 0.1s"></div>
+                                                        <div class="h-6 w-0.5 bg-indigo-500 animate-pulse" style="animation-delay: 0.2s"></div>
+                                                    </div>
+                                                </div>
+                                                <div id="os-command-text" class="text-lg font-medium tracking-tight text-white">Listening...</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Dock -->
+                                        <div class="mt-auto flex justify-center pb-2">
+                                            <div class="flex gap-3 px-4 py-2 bg-white/5 rounded-2xl border border-white/10">
+                                                <div class="os-dock-icon w-6 h-6 rounded-lg bg-indigo-600/20 flex items-center justify-center"><iconify-icon icon="lucide:browser" class="text-xs"></iconify-icon></div>
+                                                <div class="os-dock-icon w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center"><iconify-icon icon="lucide:mail" class="text-xs"></iconify-icon></div>
+                                                <div class="os-dock-icon w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center"><iconify-icon icon="lucide:calendar" class="text-xs"></iconify-icon></div>
+                                                <div class="os-dock-icon w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center"><iconify-icon icon="lucide:code-2" class="text-xs"></iconify-icon></div>
+                                                <div class="os-dock-icon w-6 h-6 rounded-lg bg-white/5 flex items-center justify-center text-indigo-400 shadow-lg"><iconify-icon icon="lucide:orbit" class="text-xs"></iconify-icon></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Voice Command Workflow Demo -->
+        <section class="py-24 px-6">
+            <div class="max-w-3xl mx-auto">
+                <div id="workflow-demo" class="glass-card rounded-3xl p-8 border-white/5 shadow-2xl relative">
+                    <div class="flex items-center justify-between mb-8 border-b border-white/5 pb-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                        </div>
+                        <span class="text-[10px] font-bold tracking-widest text-zinc-500 uppercase">Yantri OS Engine v1.0.4</span>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div id="flow-step-1" class="flex items-start gap-4 transition-all duration-700">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 shrink-0">
+                                <iconify-icon icon="lucide:mic"></iconify-icon>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-indigo-400 uppercase tracking-widest mb-1">Voice Input</p>
+                                <p class="text-lg text-white font-medium">"Summarize my unread emails from the last hour."</p>
+                            </div>
+                        </div>
+
+                        <div id="flow-step-2" class="flex items-start gap-4 opacity-30 transition-all duration-700">
+                            <div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 shrink-0">
+                                <iconify-icon icon="lucide:brain-circuit"></iconify-icon>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-blue-400 uppercase tracking-widest mb-1">Understanding Context</p>
+                                <p class="text-zinc-400">Scanning Outlook and Gmail. 4 items found.</p>
+                            </div>
+                        </div>
+
+                        <div id="flow-step-3" class="flex items-start gap-4 opacity-30 transition-all duration-700">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 shrink-0">
+                                <iconify-icon icon="lucide:check-circle"></iconify-icon>
+                            </div>
+                            <div class="w-full">
+                                <p class="text-sm font-bold text-emerald-400 uppercase tracking-widest mb-1">Action Executed</p>
+                                <div class="bg-white/5 rounded-xl p-4 mt-2 border border-white/5">
+                                    <p class="text-sm text-zinc-300">You have 3 updates from Product, and 1 urgent from Sarah regarding the budget. Total summary: Launch delayed by 2 days.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stop Clicking Section -->
+        <section id="product" class="py-32 px-6">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+                <div>
+                    <h2 class="text-5xl md:text-7xl font-bold tracking-tighter mb-8 leading-none">
+                        Stop clicking.<br>Start speaking.
+                    </h2>
+                    <p class="text-xl text-zinc-400 mb-12 max-w-lg">
+                        Yantri OS turns natural language into actions across your computer. No more nested menus or infinite searching.
+                    </p>
+                    
+                    <div class="grid gap-8">
+                        <div class="flex items-center gap-6 group">
+                            <div class="w-14 h-14 rounded-2xl bg-zinc-900 border border-white/5 flex items-center justify-center text-zinc-500 group-hover:text-indigo-400 transition-colors">
+                                <iconify-icon icon="lucide:mouse-pointer-2" class="text-2xl"></iconify-icon>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold">Traditional Workflow</h4>
+                                <p class="text-zinc-500">Click, search, copy, paste, confirm (2.4s avg.)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-6 group">
+                            <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                                <iconify-icon icon="lucide:mic" class="text-2xl"></iconify-icon>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-reveal">Yantri OS</h4>
+                                <p class="text-zinc-500">Speak, Understand, Act (0.2s avg.)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Perspective Laptop Shot -->
+                <div class="relative aspect-video perspective-lg">
+                    <div class="absolute inset-0 bg-indigo-500/10 blur-[100px] rounded-full"></div>
+                    <div class="w-full h-full transform rotate-y-12 rotate-x-6">
+                        <div class="glass-card rounded-[32px] w-full h-full p-1 border-white/10 overflow-hidden relative">
+                           <div class="absolute inset-0 bg-gradient-to-tr from-indigo-900/40 to-transparent"></div>
+                           <div class="h-full w-full bg-[#050505] p-6 flex flex-col">
+                                <div class="flex items-center gap-2 mb-8">
+                                    <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                                    <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                </div>
+                                <div class="flex-1 flex flex-col justify-center items-center text-center">
+                                    <iconify-icon icon="lucide:orbit" class="text-6xl text-indigo-500 mb-6"></iconify-icon>
+                                    <h3 class="text-2xl font-bold mb-2">Listening to your needs...</h3>
+                                    <p class="text-zinc-500 text-sm max-w-xs">I see you have 4 windows open. Would you like me to group them by project?</p>
+                                </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Major Reveal Moment -->
+        <section class="py-64 flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+            <div class="absolute inset-0 bg-indigo-600/5 blur-[120px]"></div>
+            <h2 id="reveal-brand-moment" class="text-7xl md:text-9xl font-black tracking-tighter uppercase opacity-20 transition-all duration-1000">
+                This is Yantri OS
+            </h2>
+            <div class="mt-12 max-w-xl text-zinc-500 font-medium">
+                A cognitive layer between you and your machine. The end of the learning curve.
+            </div>
+        </section>
+
+        <!-- Screen Aware Section -->
+        <section id="how-it-works" class="py-32 px-6 bg-zinc-900/30">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-24">
+                    <h2 class="text-5xl md:text-7xl font-bold tracking-tighter mb-8">Yantri sees what you see.</h2>
+                    <p class="text-xl text-zinc-400 max-w-2xl mx-auto">
+                        Point at anything on your screen. Ask Yantri about it. It understands context, depth, and intention.
+                    </p>
+                </div>
+
+                <div class="perspective-lg">
+                    <div class="glass-card rounded-[48px] overflow-hidden border-white/10 shadow-2xl transition-transform duration-700 hover:rotate-x-2 hover:-rotate-y-1">
+                        <div class="bg-zinc-950 px-6 py-4 border-b border-white/5 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-white/20"></div>
+                                <div class="w-2 h-2 rounded-full bg-white/20"></div>
+                                <div class="w-2 h-2 rounded-full bg-white/20"></div>
+                            </div>
+                            <div class="text-[10px] font-bold tracking-widest text-zinc-500 uppercase">Yantri Screen Analysis active</div>
+                            <div class="w-10"></div>
+                        </div>
+                        
+                        <div class="relative aspect-video bg-[#0a0a0a] overflow-hidden">
+                            <div class="absolute top-12 left-12 w-2/3 space-y-8">
+                                <div class="space-y-4">
+                                    <div class="h-4 w-48 bg-zinc-900 rounded-full"></div>
+                                    <div class="h-4 w-full bg-zinc-900 rounded-full"></div>
+                                    <div class="h-4 w-5/6 bg-zinc-900 rounded-full"></div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="aspect-square bg-zinc-900 rounded-2xl relative group overflow-hidden">
+                                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover opacity-50 transition-transform group-hover:scale-110">
+                                        <div class="absolute inset-0 ring-4 ring-indigo-500/50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity bg-indigo-500/10 flex items-center justify-center">
+                                            <iconify-icon icon="lucide:scan-eye" class="text-3xl text-white"></iconify-icon>
+                                        </div>
+                                    </div>
+                                    <div class="aspect-square bg-zinc-900 rounded-2xl overflow-hidden">
+                                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover opacity-30">
+                                    </div>
+                                    <div class="aspect-square bg-zinc-900 rounded-2xl overflow-hidden">
+                                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover opacity-30">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Context Tag -->
+                            <div class="absolute bottom-20 right-20 flex flex-col items-end gap-3 group">
+                                <div class="bg-indigo-600 text-white p-4 rounded-2xl rounded-br-none shadow-2xl translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all">
+                                    <p class="text-xs font-bold tracking-widest opacity-70 mb-1 uppercase">System Context Analysis:</p>
+                                    <p class="font-medium">"Analyzing selected revenue charts for Q3 report..."</p>
+                                </div>
+                                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black shadow-2xl cursor-pointer ring-4 ring-indigo-500/20">
+                                    <iconify-icon icon="lucide:info"></iconify-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Multi-App Integration -->
+        <section id="features" class="py-32 px-6 overflow-hidden">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-20 items-center">
+                    <div class="order-2 lg:order-1 relative">
+                        <div class="absolute inset-0 bg-blue-500/10 blur-[120px] rounded-full"></div>
+                        <div class="grid grid-cols-3 gap-6 relative z-10">
+                            <!-- Windowed integration icons -->
+                            <div class="glass-card p-6 rounded-3xl flex items-center justify-center aspect-square transform -rotate-6 hover:rotate-0 transition-all cursor-default border-white/10">
+                                <iconify-icon icon="logos:slack-icon" class="text-4xl"></iconify-icon>
+                            </div>
+                            <div class="glass-card p-6 rounded-3xl flex items-center justify-center aspect-square transform rotate-3 hover:rotate-0 transition-all cursor-default border-white/10">
+                                <iconify-icon icon="logos:google-drive" class="text-4xl"></iconify-icon>
+                            </div>
+                            <div class="glass-card p-6 rounded-3xl flex items-center justify-center aspect-square transform -rotate-12 hover:rotate-0 transition-all cursor-default border-white/10">
+                                <iconify-icon icon="logos:notion-icon" class="text-4xl filter grayscale brightness-200"></iconify-icon>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="order-1 lg:order-2">
+                        <h2 class="text-5xl font-bold tracking-tighter mb-8 leading-tight">
+                            One bridge to<br>all your apps.
+                        </h2>
+                        <p class="text-xl text-zinc-400 mb-12">
+                            “Schedule a meeting with the design team and send them the latest deck.” Yantri orchestrates Google Calendar, Slack, and Drive simultaneously.
+                        </p>
+                        <button id="cta-integrations" class="flex items-center gap-3 text-white font-bold group">
+                            Explore all 200+ integrations
+                            <iconify-icon icon="lucide:arrow-right" class="group-hover:translate-x-2 transition-transform"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Writing Section -->
+        <section class="py-32 px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-5xl md:text-7xl font-bold tracking-tighter mb-12">Speak naturally.<br>Write perfectly.</h2>
+                
+                <div class="glass-card rounded-[40px] p-2 relative group">
+                    <!-- UI Controls -->
+                    <div class="flex items-center gap-1 p-4 border-b border-white/5">
+                        <button id="btn-dictate" class="px-6 py-2 rounded-full bg-white text-black text-xs font-bold transition-all">Dictate</button>
+                        <button id="btn-polish" class="px-6 py-2 rounded-full text-zinc-400 hover:text-white text-xs font-bold transition-colors">Polished</button>
+                        <button id="btn-pro" class="px-6 py-2 rounded-full text-zinc-400 hover:text-white text-xs font-bold transition-colors">Professional</button>
+                    </div>
+                    <!-- Content Area -->
+                    <div class="p-12 text-left min-h-[250px] relative">
+                        <p id="dictation-text" class="text-2xl font-medium leading-relaxed text-zinc-200">
+                            "Hey team, just wanted to <span class="text-indigo-400 border-b-2 border-indigo-400/30">quickly update you</span> that the launch has moved to Friday, <span class="text-indigo-400 border-b-2 border-indigo-400/30">we need all assets ready</span> by Thursday evening."
+                        </p>
+                        
+                        <!-- Animated status inside window -->
+                        <div class="mt-8 flex items-center justify-between">
+                            <div class="flex items-center gap-3 text-zinc-500">
+                                <div class="flex gap-0.5">
+                                    <div class="h-3 w-0.5 bg-indigo-500 animate-pulse"></div>
+                                    <div class="h-3 w-0.5 bg-indigo-500 animate-pulse" style="animation-delay: 0.1s"></div>
+                                    <div class="h-3 w-0.5 bg-indigo-500 animate-pulse" style="animation-delay: 0.2s"></div>
+                                </div>
+                                <span id="dictation-status" class="text-[10px] font-bold tracking-widest uppercase">Yantri Engine: Transcribing...</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-emerald-500">
+                                <iconify-icon icon="lucide:check-circle" class="text-sm"></iconify-icon>
+                                <span class="text-[10px] font-bold tracking-widest uppercase">Ready to act</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Productivity Stats -->
+        <section class="py-32 px-6 bg-zinc-900/20">
+            <div class="max-w-7xl mx-auto flex flex-col items-center">
+                <h2 class="text-4xl font-bold tracking-tighter mb-20">From typing to thinking.</h2>
+                
+                <div class="grid md:grid-cols-3 gap-12 w-full max-w-5xl">
+                    <div class="flex flex-col items-center gap-6 group">
+                        <div class="text-sm font-bold tracking-widest text-zinc-500 uppercase">Typing</div>
+                        <div class="text-6xl font-bold transition-transform group-hover:scale-110">1×</div>
+                        <div class="w-full h-2 bg-zinc-900 rounded-full relative overflow-hidden">
+                            <div class="absolute left-0 top-0 h-full w-[10%] bg-white rounded-full"></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center gap-6 group">
+                        <div class="text-sm font-bold tracking-widest text-zinc-500 uppercase">Dictation</div>
+                        <div class="text-6xl font-bold transition-transform group-hover:scale-110">4×</div>
+                        <div class="w-full h-2 bg-zinc-900 rounded-full relative overflow-hidden">
+                            <div class="absolute left-0 top-0 h-full w-[40%] bg-blue-500 rounded-full"></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center gap-6 group">
+                        <div class="text-sm font-bold tracking-widest text-indigo-500 uppercase">Yantri OS</div>
+                        <div class="text-6xl font-bold text-white transition-transform group-hover:scale-110">10×</div>
+                        <div class="w-full h-2 bg-zinc-900 rounded-full relative overflow-hidden">
+                            <div class="absolute left-0 top-0 h-full w-[100%] bg-gradient-to-r from-indigo-500 to-blue-400 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.5)]"></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="mt-16 text-xs font-bold tracking-widest text-zinc-600 uppercase">Illustrative productivity model based on internal task completion data.</p>
+            </div>
+        </section>
+
+        <!-- Privacy Section -->
+        <section id="privacy" class="py-32 px-6">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-24 items-center">
+                <div>
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-8">
+                        <iconify-icon icon="lucide:shield-check" class="text-3xl"></iconify-icon>
+                    </div>
+                    <h2 class="text-5xl md:text-7xl font-bold tracking-tighter mb-8">Your voice belongs to you.</h2>
+                    <p class="text-xl text-zinc-400 mb-12">
+                        Your conversations should not become someone else's data. Yantri processes audio locally and only shares what's necessary to perform actions.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <iconify-icon icon="lucide:cpu" class="text-xl text-emerald-400"></iconify-icon>
+                            <span class="font-medium text-zinc-200">On-device processing where possible</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <iconify-icon icon="lucide:lock" class="text-xl text-emerald-400"></iconify-icon>
+                            <span class="font-medium text-zinc-200">Zero unnecessary data retention</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <iconify-icon icon="lucide:eye-off" class="text-xl text-emerald-400"></iconify-icon>
+                            <span class="font-medium text-zinc-200">Encrypted context windows</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative aspect-video perspective-lg">
+                    <div class="absolute inset-0 bg-emerald-500/10 blur-[100px] rounded-full"></div>
+                    <div class="w-full h-full transform -rotate-y-12">
+                        <div class="glass-card rounded-[48px] p-12 border-emerald-500/20 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 p-8">
+                                <div class="w-12 h-12 rounded-full border border-emerald-500/20 flex items-center justify-center animate-pulse">
+                                    <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-8 py-10">
+                                <div class="w-full h-1 bg-zinc-900 rounded-full overflow-hidden">
+                                    <div class="h-full w-full bg-emerald-500 transform translate-x-full animate-shimmer"></div>
+                                </div>
+                                <p class="text-xs font-mono text-zinc-500">SYSTEM_STATE: SECURE_LOCAL_TRANSCRIPTION</p>
+                                <p class="text-xs font-mono text-emerald-500">[ENCRYPTION_LAYER_ACTIVE]</p>
+                                <p class="text-xs font-mono text-zinc-500">CONTEXT_RETAINED_LOCALLY</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture Flow Section -->
+        <section class="py-32 px-6 bg-zinc-900/10 overflow-x-auto">
+            <div class="max-w-7xl mx-auto min-w-[1000px]">
+                <h2 class="text-center text-4xl font-bold mb-24">The Anatomy of an AI OS</h2>
+                
+                <div class="flex justify-between items-center relative">
+                    <!-- Connecting Line -->
+                    <div class="absolute top-1/2 left-0 w-full h-px bg-white/10 -z-10"></div>
+                    
+                    <div class="flex flex-col items-center gap-4 bg-[#050505] px-6 transition-transform hover:scale-110">
+                        <div class="w-16 h-16 rounded-full glass-card flex items-center justify-center text-indigo-400 shadow-[0_0_20px_rgba(99,102,241,0.2)]">
+                            <iconify-icon icon="lucide:mic" class="text-2xl"></iconify-icon>
+                        </div>
+                        <span class="text-[10px] font-bold tracking-widest text-zinc-500 uppercase">Voice</span>
+                    </div>
+
+                    <div class="flex flex-col items-center gap-4 bg-[#050505] px-6 transition-transform hover:scale-110">
+                        <div class="w-16 h-16 rounded-full glass-card flex items-center justify-center text-blue-400">
+                            <iconify-icon icon="lucide:brain" class="text-2xl"></iconify-icon>
+                        </div>
+                        <span class="text-[10px] font-bold tracking-widest text-zinc-500 uppercase text-reveal">Understand</span>
+                    </div>
+
+                    <div class="flex flex-col items-center gap-4 bg-[#050505] px-6 transition-transform hover:scale-110">
+                        <div class="w-16 h-16 rounded-full glass-card flex items-center justify-center text-emerald-400">
+                            <iconify-icon icon="lucide:layout" class="text-2xl"></iconify-icon>
+                        </div>
+                        <span class="text-[10px] font-bold tracking-widest text-zinc-500 uppercase">Context</span>
+                    </div>
+
+                    <div class="flex flex-col items-center gap-4 bg-[#050505] px-6 transition-transform hover:scale-110">
+                        <div class="w-16 h-16 rounded-full glass-card flex items-center justify-center text-amber-400">
+                            <iconify-icon icon="lucide:list-todo" class="text-2xl"></iconify-icon>
+                        </div>
+                        <span class="text-[10px] font-bold tracking-widest text-zinc-500 uppercase">Plan</span>
+                    </div>
+
+                    <div class="flex flex-col items-center gap-4 bg-[#050505] px-6 transition-transform hover:scale-110">
+                        <div class="w-16 h-16 rounded-full glass-card flex items-center justify-center text-rose-400">
+                            <iconify-icon icon="lucide:zap" class="text-2xl"></iconify-icon>
+                        </div>
+                        <span class="text-[10px] font-bold tracking-widest text-zinc-500 uppercase">Act</span>
+                    </div>
+
+                    <div class="flex flex-col items-center gap-4 bg-[#050505] px-6 transition-transform hover:scale-110">
+                        <div class="w-16 h-16 rounded-full glass-card flex items-center justify-center text-white">
+                            <iconify-icon icon="lucide:check" class="text-2xl"></iconify-icon>
+                        </div>
+                        <span class="text-[10px] font-bold tracking-widest text-zinc-500 uppercase">Done</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-32 px-6 bg-zinc-950">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-4xl font-bold tracking-tighter mb-16 text-center">Questions</h2>
+                <div class="space-y-4">
+                    <div class="glass-card rounded-2xl overflow-hidden">
+                        <button id="faq-btn-1" class="w-full flex items-center justify-between p-6 text-left hover:bg-white/5 transition-colors group">
+                            <span class="font-bold">What is Yantri OS?</span>
+                            <iconify-icon icon="lucide:chevron-down" class="group-hover:translate-y-1 transition-transform"></iconify-icon>
+                        </button>
+                        <div class="px-6 pb-6 text-zinc-400 text-sm">
+                            Yantri OS is a voice-first artificial intelligence operating layer that sits on top of your existing computer, allowing you to control applications and perform tasks using natural language.
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-2xl overflow-hidden">
+                        <button id="faq-btn-2" class="w-full flex items-center justify-between p-6 text-left hover:bg-white/5 transition-colors">
+                            <span class="font-bold">How is Yantri different from speech-to-text?</span>
+                            <iconify-icon icon="lucide:plus"></iconify-icon>
+                        </button>
+                    </div>
+                    <div class="glass-card rounded-2xl overflow-hidden">
+                        <button id="faq-btn-3" class="w-full flex items-center justify-between p-6 text-left hover:bg-white/5 transition-colors">
+                            <span class="font-bold">Can Yantri understand what's on my screen?</span>
+                            <iconify-icon icon="lucide:plus"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA Cinematic Section -->
+        <section class="py-48 px-6 relative overflow-hidden flex flex-col items-center">
+            <div class="absolute inset-0 bg-gradient-to-t from-indigo-500/10 to-transparent"></div>
+            
+            <!-- Small Waveform branding -->
+            <div class="mb-20 flex gap-0.5 h-6 items-end">
+                <div class="w-0.5 h-1/2 bg-white/20"></div>
+                <div class="w-0.5 h-full bg-indigo-500"></div>
+                <div class="w-0.5 h-1/3 bg-white/20"></div>
+                <div class="w-0.5 h-3/4 bg-white/20"></div>
+            </div>
+
+            <div class="max-w-4xl mx-auto text-center relative z-10">
+                <div class="w-32 h-32 bg-indigo-600/10 border border-indigo-500/20 rounded-full mx-auto mb-12 flex items-center justify-center">
+                    <iconify-icon icon="lucide:orbit" class="text-6xl text-white"></iconify-icon>
+                </div>
+                <h2 id="final-reveal-text" class="text-6xl md:text-8xl font-bold tracking-tighter mb-12">The computer is ready to listen.</h2>
+                <p class="text-2xl text-zinc-400 mb-16 max-w-2xl mx-auto">
+                    Meet the operating system built around how humans actually communicate.
+                </p>
+                
+                <div class="flex flex-col items-center gap-12">
+                    <div id="os-launcher-orb" class="voice-orb-pulse w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-[0_0_60px_rgba(255,255,255,0.3)] cursor-pointer group hover:scale-110 transition-transform">
+                        <iconify-icon icon="lucide:mic" class="text-4xl text-black"></iconify-icon>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-6">
+                        <button id="final-cta-try" class="bg-white text-black px-10 py-5 rounded-full text-xl font-bold hover:scale-105 transition-all shadow-xl shadow-white/10">
+                            Try Yantri OS
+                        </button>
+                        <button id="final-cta-demo" class="border border-white/20 px-10 py-5 rounded-full text-xl font-bold hover:bg-white/5 transition-all">
+                            Watch the demo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="pt-24 pb-12 px-6 border-t border-white/5">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid md:grid-cols-4 gap-16 mb-24">
+                    <div class="col-span-2">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-8 h-8 relative flex items-center justify-center">
+                                <div class="absolute inset-0 bg-indigo-500 blur-md opacity-30"></div>
+                                <iconify-icon icon="lucide:orbit" class="text-2xl text-white relative z-10"></iconify-icon>
+                            </div>
+                            <span class="text-xl font-bold tracking-tight text-reveal">Yantri OS</span>
+                        </div>
+                        <p class="text-zinc-500 max-w-xs mb-8">
+                            Your voice. Your computer. One AI. The future of interaction is spoken.
+                        </p>
+                        <div class="flex gap-6">
+                            <a id="social-x" href="#" class="text-zinc-500 hover:text-white transition-colors"><iconify-icon icon="lucide:twitter" class="text-xl"></iconify-icon></a>
+                            <a id="social-li" href="#" class="text-zinc-500 hover:text-white transition-colors"><iconify-icon icon="lucide:linkedin" class="text-xl"></iconify-icon></a>
+                            <a id="social-gh" href="#" class="text-zinc-500 hover:text-white transition-colors"><iconify-icon icon="lucide:github" class="text-xl"></iconify-icon></a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-6 text-sm uppercase tracking-widest">Product</h4>
+                        <ul class="space-y-4 text-zinc-500">
+                            <li><a id="footer-link-features" href="#" class="hover:text-white transition-colors">Features</a></li>
+                            <li><a id="footer-link-integrations" href="#" class="hover:text-white transition-colors">Integrations</a></li>
+                            <li><a id="footer-link-dictation" href="#" class="hover:text-white transition-colors">Dictation</a></li>
+                            <li><a id="footer-link-security" href="#" class="hover:text-white transition-colors">Security</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold mb-6 text-sm uppercase tracking-widest">Company</h4>
+                        <ul class="space-y-4 text-zinc-500">
+                            <li><a id="footer-link-privacy" href="#" class="hover:text-white transition-colors">Privacy</a></li>
+                            <li><a id="footer-link-terms" href="#" class="hover:text-white transition-colors">Terms</a></li>
+                            <li><a id="footer-link-contact" href="#" class="hover:text-white transition-colors">Contact</a></li>
+                            <li><a id="footer-link-changelog" href="#" class="hover:text-white transition-colors">Changelog</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row justify-between items-center pt-12 border-t border-white/5">
+                    <p class="text-zinc-600 text-sm">© 2026 Yantri OS. All rights reserved.</p>
+                    <p class="text-zinc-600 text-[10px] font-bold tracking-widest uppercase mt-4 md:mt-0">Engineered for humanity</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Sticky Navigation
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Text Reveal Branding Effect
+        function initTextReveal() {
+            document.querySelectorAll('.text-reveal').forEach(el => {
+                const text = el.innerText;
+                el.innerHTML = '';
+                text.split('').forEach((char, i) => {
+                    const span = document.createElement('span');
+                    span.innerText = char === ' ' ? '\u00A0' : char;
+                    span.style.transitionDelay = `${i * 0.05}s`;
+                    el.appendChild(span);
+                });
+                
+                const observer = new IntersectionObserver((entries) => {
+                    if(entries[0].isIntersecting) el.classList.add('active');
+                }, { threshold: 0.1 });
+                observer.observe(el);
+            });
+        }
+        initTextReveal();
+
+        // Reveal on Scroll Generic
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+
+        // Laptop Reveal Animation Logic
+        const laptopSection = document.getElementById('laptop-reveal-section');
+        const laptopLid = document.getElementById('main-laptop-lid');
+        const osBoot = document.getElementById('os-boot');
+        const osDesktop = document.getElementById('os-desktop');
+        const bootText = document.getElementById('boot-text');
+
+        window.addEventListener('scroll', () => {
+            const rect = laptopSection.getBoundingClientRect();
+            const scrollPercent = Math.min(Math.max(0, -rect.top / (rect.height - window.innerHeight)), 1);
+            
+            // Open Lid
+            const openDeg = -100 * scrollPercent;
+            laptopLid.style.transform = `rotateX(${openDeg}deg)`;
+            
+            // Boot Sequence triggers
+            if (scrollPercent > 0.4) {
+                bootText.classList.remove('opacity-0');
+            }
+            
+            if (scrollPercent > 0.7) {
+                osBoot.classList.add('opacity-0');
+                osDesktop.classList.remove('opacity-0');
+            }
+        });
+
+        // Interactive Orb Mouse Interaction
+        const orbContainer = document.getElementById('voice-orb-container');
+        orbContainer.addEventListener('mousemove', (e) => {
+            const { left, top, width, height } = orbContainer.getBoundingClientRect();
+            const x = (e.clientX - left - width / 2) / 10;
+            const y = (e.clientY - top - height / 2) / 10;
+            orbContainer.style.transform = `translate3d(${x}px, ${y}px, 0) scale(1.05)`;
+        });
+
+        orbContainer.addEventListener('mouseleave', () => {
+            orbContainer.style.transform = 'translate3d(0, 0, 0) scale(1)';
+        });
+
+        // Simulate Workflow Demo Steps
+        function runWorkflowDemo() {
+            const step1 = document.getElementById('flow-step-1');
+            const step2 = document.getElementById('flow-step-2');
+            const step3 = document.getElementById('flow-step-3');
+
+            setInterval(() => {
+                setTimeout(() => {
+                    step1.style.opacity = '1';
+                    step2.style.opacity = '0.3';
+                    step3.style.opacity = '0.3';
+                }, 0);
+                setTimeout(() => {
+                    step1.style.opacity = '0.3';
+                    step2.style.opacity = '1';
+                    step3.style.opacity = '0.3';
+                }, 2000);
+                setTimeout(() => {
+                    step1.style.opacity = '0.3';
+                    step2.style.opacity = '0.3';
+                    step3.style.opacity = '1';
+                }, 4000);
+            }, 6000);
+        }
+
+        runWorkflowDemo();
+
+        // Dictation Demo Functionality
+        const dictationText = document.getElementById('dictation-text');
+        const dictationStatus = document.getElementById('dictation-status');
+        
+        document.getElementById('btn-polish').addEventListener('click', function() {
+             dictationText.innerHTML = '“Hey team, just an update: the launch is moving to Friday. We need all assets finalized by Thursday evening.”';
+             dictationStatus.innerText = 'Yantri Engine: Polished version generated.';
+             this.classList.add('bg-white', 'text-black');
+             this.classList.remove('text-zinc-400');
+             document.getElementById('btn-dictate').classList.remove('bg-white', 'text-black');
+             document.getElementById('btn-dictate').classList.add('text-zinc-400');
+        });
+
+        // Brand moment animation on scroll
+        window.addEventListener('scroll', () => {
+            const el = document.getElementById('reveal-brand-moment');
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.8) {
+                el.style.opacity = '1';
+                el.style.letterSpacing = 'normal';
+            }
+        });
+
+        // Time update in OS simulation
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('os-time').innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }, 1000);
+    </script>
+
+
+</body></html>
+
+    <script>
+        // Navigation Integration
+        document.getElementById('cta-nav-try').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.parent.postMessage({ type: 'NAVIGATE', path: '/login' }, '*');
+        });
+        document.getElementById('cta-hero-try').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.parent.postMessage({ type: 'NAVIGATE', path: '/login' }, '*');
+        });
+    </script>
